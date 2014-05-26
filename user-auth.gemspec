@@ -1,15 +1,15 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'user/auth/version'
+require 'user-auth/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "user-auth"
-  spec.version       = User::Auth::VERSION
+  spec.version       = UserAuth::VERSION
   spec.authors       = ["fushang318"]
   spec.email         = ["fushang318@gmail.com"]
-  spec.description   = %q{TODO: Write a gem description}
-  spec.summary       = %q{TODO: Write a gem summary}
+  spec.description   = %q{user-auth}
+  spec.summary       = %q{user-auth}
   spec.homepage      = ""
   spec.license       = "MIT"
 
