@@ -1,5 +1,3 @@
-require 'rest_client'
-
 module UserAuth
   module MindpinMode
     AUTH_URL = "http://4ye.mindpin.com/account/sign_in"
