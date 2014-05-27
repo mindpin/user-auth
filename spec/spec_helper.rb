@@ -5,6 +5,8 @@ require 'active_support/dependencies/autoload'
 require 'mongoid'
 ENV['RACK_ENV'] = 'test'
 Mongoid.load!(File.expand_path("../mongoid.yml",__FILE__))
+require "devise"
+require "devise_config"
 
 require "./lib/user-auth"
 Bundler.require(:test)

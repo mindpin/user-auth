@@ -7,14 +7,14 @@ module UserAuth
 
     def self.included(base)
       base.extend ClassMethods
-      base.send(:include, Mongoid::Document)
-      base.send(:include, Mongoid::Timestamps)
+      base.send :include, Mongoid::Document
+      base.send :include, Mongoid::Timestamps
 
-      base.send(:field, :secret, :type => String)
-      base.send(:field, :uid, :type => String)
-      base.send(:field, :name, :type => String)
-      base.send(:field, :email, :type => String)
-      base.send(:field, :avatar, :type => String)
+      base.send :field, :secret, :type => String
+      base.send :field, :uid,    :type => String
+      base.send :field, :name,   :type => String
+      base.send :field, :email,  :type => String
+      base.send :field, :avatar, :type => String
     end
 
     module ClassMethods
