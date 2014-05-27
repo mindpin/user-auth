@@ -1,0 +1,4 @@
+= simple_form_for User.new, :url => "/login", :method => :post do |f|
+  = f.input :email
+  = f.input :password
+  = f.button :submit
