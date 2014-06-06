@@ -15,6 +15,10 @@ module UserAuth
       base.send :field, :avatar, :type => String
     end
 
+    def id
+      attributes["_id"].to_s
+    end
+
     module ClassMethods
       def authenticate(email, password)
         params = {:user => {:login => email, :password => password}}
