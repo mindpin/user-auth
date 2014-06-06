@@ -1,7 +1,6 @@
 module UserAuth
   module LocalStoreMode
     def self.included(base)
-      base.extend ClassMethods
       base.send :include, Mongoid::Document
       base.send :include, Mongoid::Timestamps
 
@@ -40,10 +39,7 @@ module UserAuth
       # field :failed_attempts, type: Integer, default: 0 # Only if lock strategy is :failed_attempts
       # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
       # field :locked_at,       type: Time
-    end
-
-    def id
-      attributes["_id"].to_s
+      base.extend ClassMethods
     end
 
     module ClassMethods
@@ -56,12 +52,12 @@ module UserAuth
       end
 
       def find_for_database_authentication(conditions)
-        p "~find_for_database_authentication"
-        p conditions
-        p "~~find_for_database_authentication"
-        login = conditions.delete(:login).downcase
-        email = conditions.delete(:email).downcase
-        self.where(:login => login).first || self.where(:email => email).first
+        login = conditions.delete(:login)
+        return self.where(:login => login.downcase).first if !login.blank?
+
+        email = conditions.delete(:email)
+        return self.where(:email => email.downcase).first if !email.blank?
+        nil
       end
     end
   end

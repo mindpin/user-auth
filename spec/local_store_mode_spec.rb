@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 class LocalStoreModeUser
-  include Mongoid::Document
   include UserAuth::LocalStoreMode
 end
 
@@ -35,6 +34,8 @@ describe UserAuth::LocalStoreMode do
       user.should == nil
       user = LocalStoreModeUser.authenticate("user_local_store_login","123")
       user.should == nil
+
+      LocalStoreModeUser.find_for_database_authentication({})
     }
   end
 end

@@ -4,7 +4,6 @@ module UserAuth
     USER_INFO_URL  = "http://4ye.mindpin.com/api/user_info"
 
     def self.included(base)
-      base.extend ClassMethods
       base.send :include, Mongoid::Document
       base.send :include, Mongoid::Timestamps
 
@@ -13,10 +12,7 @@ module UserAuth
       base.send :field, :name,   :type => String
       base.send :field, :email,  :type => String
       base.send :field, :avatar, :type => String
-    end
-
-    def id
-      attributes["_id"].to_s
+      base.extend ClassMethods
     end
 
     module ClassMethods
