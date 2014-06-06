@@ -56,6 +56,9 @@ module UserAuth
       end
 
       def find_for_database_authentication(conditions)
+        p "~find_for_database_authentication"
+        p conditions
+        p "~~find_for_database_authentication"
         login = conditions.delete(:login).downcase
         email = conditions.delete(:email).downcase
         self.where(:login => login).first || self.where(:email => email).first
