@@ -7,12 +7,12 @@ end
 
 class AuthLoginLengthUser
   include UserAuth::LocalStoreMode
-  auth_field :login, :length => {:in => 7..8}
+  auth_field :login, :login_validate => {:length => {:in => 7..8}}
 end
 
 class AuthLoginFormatUser
   include UserAuth::LocalStoreMode
-  auth_field :login, :format => {:with => /\A[a-z0-9_]+\z/, :message => '只允许数字、字母和下划线'}
+  auth_field :login, :login_validate => {:format => {:with => /\A[a-z0-9_]+\z/, :message => '只允许数字、字母和下划线'}}
 end
 
 describe UserAuth::LocalStoreMode::AuthFieldLoginMethods do

@@ -67,8 +67,9 @@ module UserAuth
       end
 
       def __auth_field_add_login_validates(options)
-        login_format = options[:format] || {:with => /\A[a-z0-9]+\z/, :message => '只允许数字、字母'}
-        login_length = options[:length] || {:in => 3..20}
+        login_validate = options[:login_validate] || {}
+        login_format = login_validate[:format] || {:with => /\A[a-z0-9]+\z/, :message => '只允许数字、字母'}
+        login_length = login_validate[:length] || {:in => 3..20}
         self.send(:validates, :login, 
           :presence => true, 
           :uniqueness => {:case_sensitive => false},

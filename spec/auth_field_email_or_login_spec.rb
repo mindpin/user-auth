@@ -7,7 +7,7 @@ end
 
 class AuthEmailOrLoginLengthUser
   include UserAuth::LocalStoreMode
-  auth_field :email_or_login, :length => {:in => 7..8}
+  auth_field :email_or_login, :login_validate => {:length => {:in => 7..8}}
 end
 
 describe UserAuth::LocalStoreMode::AuthFieldEmailMethods do
