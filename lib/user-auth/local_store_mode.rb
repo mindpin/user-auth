@@ -39,25 +39,36 @@ module UserAuth
       # field :failed_attempts, type: Integer, default: 0 # Only if lock strategy is :failed_attempts
       # field :unlock_token,    type: String # Only if unlock strategy is :email or :both
       # field :locked_at,       type: Time
+      base.extend AuthFieldEmailOrLoginMethods::ClassMethods
       base.extend ClassMethods
     end
 
     module ClassMethods
-      def authenticate(email_or_login, password)
-        user = self.where(:login => email_or_login).first
-        user = self.where(:email => email_or_login).first if user.blank?
-        valid = user.valid_password?(password) if !user.blank?
-        return user if !!valid
-        nil
+      def auth_field(auth_field_name, options = {})
+        auth_field_name = auth_field_name.to_sym
+        case auth_field_name
+        when :login
+          self.send(:include, AuthFieldLoginMethods)
+          #   3 增加 login validates
+          self.__auth_field_add_login_validates(options)
+        when :email
+          self.send(:include, AuthFieldEmailMethods)
+        when :email_or_login
+          self.send(:include, AuthFieldEmailOrLoginMethods)
+          #   1 增加 login validates
+          self.__auth_field_add_login_validates(options)
+        end
       end
 
-      def find_for_database_authentication(conditions)
-        login = conditions.delete(:login)
-        return self.where(:login => login.downcase).first if !login.blank?
-
-        email = conditions.delete(:email)
-        return self.where(:email => email.downcase).first if !email.blank?
-        nil
+      def __auth_field_add_login_validates(options)
+        login_format = options[:format] || {:with => /\A[a-z0-9]+\z/, :message => '只允许数字、字母'}
+        login_length = options[:length] || {:in => 3..20}
+        self.send(:validates, :login, 
+          :presence => true, 
+          :uniqueness => {:case_sensitive => false},
+          :format => login_format,
+          :length => login_length
+          )
       end
     end
   end
