@@ -19,7 +19,7 @@ module UserAuth
 
       module ClassMethods
         def authenticate(login, password)
-          user = self.where(:login => login).first
+          user = self.where(:login => login.downcase).first
           valid = user.valid_password?(password) if !user.blank?
           return user if !!valid
           nil
@@ -27,7 +27,7 @@ module UserAuth
 
         #   2 自定义 find_for_database_authentication 只检查 login
         def find_for_database_authentication(conditions)
-          login = conditions.delete(:login)
+          login = conditions.delete(:login).downcase
           self.where(:login => login).first
         end
       end

@@ -41,6 +41,12 @@ module UserAuth
       # field :locked_at,       type: Time
       base.extend AuthFieldEmailOrLoginMethods::ClassMethods
       base.extend ClassMethods
+      base.send :before_validation, :case_insensitive_fields
+    end
+
+    def case_insensitive_fields
+      self.login = self.login.downcase if !self.login.blank?
+      self.email = self.email.downcase if !self.email.blank?
     end
 
     module ClassMethods
