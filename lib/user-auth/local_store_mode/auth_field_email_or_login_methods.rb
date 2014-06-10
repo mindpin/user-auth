@@ -3,6 +3,7 @@ module UserAuth
     module AuthFieldEmailOrLoginMethods
       def self.included(base)
         base.send(:extend, ClassMethods)
+        base.send(:attr_accessor, :email_or_login)
       end
 
       module ClassMethods
