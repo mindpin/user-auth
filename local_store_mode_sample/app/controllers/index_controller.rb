@@ -3,6 +3,6 @@ class IndexController < ApplicationController
     if user_signed_in?
       return render "index/index"
     end
-    redirect_to "/users/sign_in"
+    redirect_to "/account/sign_in"
   end
 end
