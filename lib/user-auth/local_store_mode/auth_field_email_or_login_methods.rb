@@ -16,12 +16,10 @@ module UserAuth
 
         #   2 自定义 find_for_database_authentication 检查 email 和 login
         def find_for_database_authentication(conditions)
-          login = conditions.delete(:login)
-          return self.where(:login => login).first if !login.blank?
-
-          email = conditions.delete(:email)
-          return self.where(:email => email).first if !email.blank?
-          nil
+          email_or_login = conditions.delete(:email_or_login)
+          user = self.where(:login => email_or_login).first
+          user = self.where(:email => email_or_login).first if user.blank?
+          return user
         end
       end
     end
